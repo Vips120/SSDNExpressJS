@@ -1,59 +1,22 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
+const config = require('config');
+const port = process.env.PORT || 4000;
+const user = require('./routes/user.routes');
+const middleware = require('./middleware/user');
 app.use(express.json());
- let users = [{
-     id:1,
-     name:'john'
- },
- {
-     id:2,
-     name:'kim'
- },
- {
-     id:3,
-     name:'rahul'
- },
- {
-     id:4,
-     name:'emma'
- }
-];
-
-app.get('/api/user', (req,res) => {
-    res.send(users);
-});
-
-app.get('/api/user/:id', (req,res) => {
-    // let id = req.params.id;
-  let user = users.find(item => item.id === parseInt(req.params.id));
-  if(!user) {return res.status(403).send({message:'invalid id'})}
-    res.send(user);
-});
-
-app.post('/api/newuser', (req,res) => {
-    let newUser = {
-        id:users.length + 1,
-        name:req.body.name
-    };
-    users.push(newUser);
-    res.send(users);
-});
-
-app.put('/api/updateuser/:id' ,(req,res) => {
-    let user = users.find(item => item.id === parseInt(req.params.id));
-  if(!user) {return res.status(403).send({message:'invalid id'})}
-  user.name = req.body.name;
-  res.send(user);
-});
-
-app.delete('/api/removeuser/:id', (req,res) => {
-    let user = users.find(item => item.id === parseInt(req.params.id));
-    if(!user) {return res.status(403).send({message:'invalid id'})}
-    let index = users.indexOf(user);
-    let data = users.splice(index,1);
-    res.send({message:'remove the data! come back again :('})
-
-})
-
-
-app.listen(4000,() => {console.log('server working on port number 4000')});
+if(config.get('host.mail') === 'Development mode'){
+    app.use(morgan('tiny'));
+};
+if(process.env.NODE_ENV === 'production'){
+    console.log(`password: ${config.get('password')}`);
+}
+// app.use(express.urlencoded({extended:true}))
+app.use(middleware);
+// console.log(process);
+// console.log(`Production mode: ${process.env.NODE_ENV}`);
+// console.log(`development mode : ${app.set('env')}`);
+// console.log('mode:', config.get('host.mail'));
+app.use('/api/user',user);
+app.listen(port,() => {console.log(`server working on port number ${port}`)});
