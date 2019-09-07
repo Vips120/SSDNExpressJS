@@ -17,7 +17,7 @@ let UserModel = mongoose.model('user', userSchema);
 async function NewUser(){
     let data = new UserModel({
         name:'Raj',
-        author:'Pter Thiel',
+        author:'Peter Thiel',
         courses:['Nodejs', 'Mongodb'],
         isPublished:true
     });
@@ -28,11 +28,14 @@ async function NewUser(){
 
 //comparission operators
 //$lt, $lte, $gt, $gte, $in,$nin
+//LogiCal operators or(), and()
 async  function GetAllUser(){
   let result = await UserModel
                      //.find({'price':{$gt:10, $lte:40}})
                        //.find({'price':{$in:[10,20,30]}})
-                       .find()
+                      //  .find()
+                      //  .and([{name:'raj'}, {author:'Peter Thiel'}])
+                      .find()
                      .sort('-name')
                      .select(['name', 'author'])
   console.log(result);
