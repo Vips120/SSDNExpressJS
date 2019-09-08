@@ -19,16 +19,16 @@ mongoose.connect('mongodb://localhost/DS', {useNewUrlParser:true})
 
       async function Authors(){
 let data = new Author({
-    name: 'peter',
-    website: 'www.thiel.com',
-    emailId: 'peter@gmail.com'
+    name: 'vipul',
+    website: 'www.codewithvipul.com',
+    emailId: 'vs@gmail.com'
 });
 
 let items = await data.save();
 console.log(items);
       }
 
-    //   Authors();
+      Authors();
 
     async function Courses(authorId){
         let data = new Course({
@@ -50,4 +50,4 @@ console.log(items);
                                 console.log(data);
              };
 
-             AllCourses();
+            //  AllCourses();
