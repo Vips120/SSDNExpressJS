@@ -9,7 +9,12 @@ const middleware = require('./middleware/user');
 const Genre = require('./routes/genre.routes');
 const movies = require('./routes/movie.routes');
 const userRegistration = require('./routes/userregistration.routets');
+const auth = require('./auth/auth');
 app.use(express.json());
+if(!config.get('SSDPRIVATEKEY')){
+    console.log('Server get crashed');
+    process.exit(1);
+}
 if(config.get('host.mail') === 'Development mode'){
     app.use(morgan('tiny'));
 };
@@ -33,4 +38,5 @@ app.use('/api/user',user);
 app.use('/api/movie', Genre);
 app.use('/api/movie', movies);
 app.use('/api/users', userRegistration);
+app.use('/api/auth', auth);
 app.listen(port,() => {console.log(`server working on port number ${port}`)});

@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Joi = require('@hapi/joi');
-
+let jwt = require('jsonwebtoken');
+let config = require('config');
 let UserSchema = new mongoose.Schema({
     firstname:{type:String,required:true,min:5,max:250},
     lastname:{type:String,required:true,min:5,max:250},
@@ -10,6 +11,10 @@ let UserSchema = new mongoose.Schema({
         password:{type:String,required:true}
     }
 });
+ UserSchema.methods.UserIdentity =  function(){
+   let token = jwt.sign({_id: this._id}, config.get('SSDPRIVATEKEY'));
+   return token;
+ }
 
 let User = mongoose.model('users', UserSchema);
 

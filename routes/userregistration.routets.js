@@ -18,7 +18,9 @@ let salt = await bcrypt.genSalt(10);
 data.UserLogin.password = await bcrypt.hash(data.UserLogin.password, salt);
 
 let items = await data.save();
-res.send({message:'thanks for the registration', data:items})
+//Information Expert Principle
+let token = items.UserIdentity();
+res.header('x-auth-token', token).send({message:'thanks for the registration', data:items})
 
 });
 module.exports = router;
