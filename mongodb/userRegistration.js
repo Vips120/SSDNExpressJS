@@ -9,10 +9,11 @@ let UserSchema = new mongoose.Schema({
     UserLogin:{
         email:{type:String,required:true,unique:true},
         password:{type:String,required:true}
-    }
+    },
+    isAdmin:{type:Boolean}
 });
  UserSchema.methods.UserIdentity =  function(){
-   let token = jwt.sign({_id: this._id}, config.get('SSDPRIVATEKEY'));
+   let token = jwt.sign({_id: this._id, isAdmin:this.isAdmin}, config.get('SSDPRIVATEKEY'));
    return token;
  }
 
