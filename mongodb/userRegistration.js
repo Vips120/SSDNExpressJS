@@ -2,6 +2,12 @@ let mongoose = require('mongoose');
 let Joi = require('@hapi/joi');
 let jwt = require('jsonwebtoken');
 let config = require('config');
+
+let FileSchema = new mongoose.Schema({
+    image:{type:String, required:true}
+});
+
+
 let UserSchema = new mongoose.Schema({
     firstname:{type:String,required:true,min:5,max:250},
     lastname:{type:String,required:true,min:5,max:250},
@@ -18,6 +24,7 @@ let UserSchema = new mongoose.Schema({
  }
 
 let User = mongoose.model('users', UserSchema);
+let File = mongoose.model('File', FileSchema);
 
 function ValidationError(message){
     let Schema = Joi.object().keys({
@@ -32,4 +39,4 @@ function ValidationError(message){
     return Joi.validate(message,Schema);
 }
 
-module.exports = {User,ValidationError};
+module.exports = {User,ValidationError,File};

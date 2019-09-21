@@ -10,6 +10,7 @@ const Genre = require('./routes/genre.routes');
 const movies = require('./routes/movie.routes');
 const userRegistration = require('./routes/userregistration.routets');
 const auth = require('./auth/auth');
+const fileupload = require('./routes/file.routes');
 app.use(express.json());
 if(!config.get('SSDPRIVATEKEY')){
     console.log('Server get crashed');
@@ -29,7 +30,7 @@ mongoose
 .catch(err => console.log('something went wrong', err.message));
 
 
-
+app.use('/uploads', express.static('uploads'));
 // console.log(process);
 // console.log(`Production mode: ${process.env.NODE_ENV}`);
 // console.log(`development mode : ${app.set('env')}`);
@@ -39,4 +40,5 @@ app.use('/api/movie', Genre);
 app.use('/api/movie', movies);
 app.use('/api/users', userRegistration);
 app.use('/api/auth', auth);
+app.use('/api/', fileupload);
 app.listen(port,() => {console.log(`server working on port number ${port}`)});

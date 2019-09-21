@@ -1,6 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi');
 const router = express.Router();
+console.log('hello user');
 let users = [{
     id:1,
     name:'john'
@@ -20,6 +21,7 @@ let users = [{
 ];
 
 router.get('/', (req,res) => {
+    console.log(users);
    res.send(users);
 });
 
