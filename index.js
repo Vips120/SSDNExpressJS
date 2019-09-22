@@ -11,6 +11,8 @@ const movies = require('./routes/movie.routes');
 const userRegistration = require('./routes/userregistration.routets');
 const auth = require('./auth/auth');
 const fileupload = require('./routes/file.routes');
+const mailer = require('./routes/nodemailer');
+const resetPassword = require('./routes/resetpassword');
 app.use(express.json());
 if(!config.get('SSDPRIVATEKEY')){
     console.log('Server get crashed');
@@ -41,4 +43,6 @@ app.use('/api/movie', movies);
 app.use('/api/users', userRegistration);
 app.use('/api/auth', auth);
 app.use('/api/', fileupload);
+app.use('/api/', mailer);
+app.use('/api/', resetPassword);
 app.listen(port,() => {console.log(`server working on port number ${port}`)});

@@ -12,6 +12,8 @@ let UserSchema = new mongoose.Schema({
     firstname:{type:String,required:true,min:5,max:250},
     lastname:{type:String,required:true,min:5,max:250},
     userId:{type:String,required:true,min:5,max:250},
+    resetPasswordToken : {type:String},
+    resetPasswordExpires: {type:Date},
     UserLogin:{
         email:{type:String,required:true,unique:true},
         password:{type:String,required:true}
