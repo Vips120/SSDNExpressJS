@@ -8,6 +8,7 @@ let FileSchema = new mongoose.Schema({
 });
 
 
+
 let UserSchema = new mongoose.Schema({
     firstname:{type:String,required:true,min:5,max:250},
     lastname:{type:String,required:true,min:5,max:250},
@@ -23,7 +24,8 @@ let UserSchema = new mongoose.Schema({
  UserSchema.methods.UserIdentity =  function(){
    let token = jwt.sign({_id: this._id, isAdmin:this.isAdmin}, config.get('SSDPRIVATEKEY'));
    return token;
- }
+ };
+ 
 
 let User = mongoose.model('users', UserSchema);
 let File = mongoose.model('File', FileSchema);
@@ -40,5 +42,6 @@ function ValidationError(message){
     });
     return Joi.validate(message,Schema);
 }
+
 
 module.exports = {User,ValidationError,File};
